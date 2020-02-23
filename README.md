@@ -1,27 +1,75 @@
 # GameBetsApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+My first attempt with Angular framework after ['Tour of Heroes'](https://angular.io/tutorial) tutorial. Also my first CRUD application in node.js with my own REST API. Orignally created for "Web Applications" classes.
 
-## Development server
+## About project
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+In application user can choose winner of certain match. He can add, remove and modify teams. Matches can be only added via MySQL. After placing a bet data is stored in localstorage instead of database, becouse application is very simple and is missing authentication feature. Also some logic is missing such disable placing bets on match that already was played.
 
-## Code scaffolding
+![](2020-02-23-17-52-34.png)
+**Figure 1** - Home page
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![](http://g.recordit.co/Ihmz8t3P7q.gif)
+**Figure 2** - Deleting team
 
-## Build
+![](http://g.recordit.co/UFGMCFYCxh.gif)
+**Figure 3** - Adding new team
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+![](2020-02-23-18-02-16.png)
+**Figure 4** - Example match page
 
-## Running unit tests
+## Getting Started
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Prerequisites
 
-## Running end-to-end tests
+* [Angular 7](https://angular.io/)
+* [node.js](https://nodejs.org/en/)
+* [mySQL](https://www.mysql.com/)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Installing
 
-## Further help
+Run server (for example XAMPP)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Import database from file `gamebets.sql` to MySQL
+
+Change connection options in `server.js` file if needed:
+
+![](2020-02-23-17-37-04.png)
+
+Init packages
+
+```
+npm install
+```
+
+Run backend API - `server.js`
+
+```
+nodemon server.js
+```
+
+Run Angular application
+
+```
+ng serve
+```
+
+Navigate to `http://localhost:4200/`
+
+## Built With
+
+* [Angular 7](https://angular.io/) - Frontend
+* [node.js](https://nodejs.org/en/) - REST API
+* JavaScript (ES5+)
+* HTML
+* CSS
+* [Font Awesome](https://fontawesome.com/) - Icons
+* [Bootstrap 4](https://getbootstrap.com/) - Stylize and responsive CSS
+
+## Author
+
+* **Kamil Adamus** - [Prajns](https://github.com/prajns)
+
+## License
+
+This project is licensed under the MIT License

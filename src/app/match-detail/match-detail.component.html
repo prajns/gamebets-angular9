@@ -1,0 +1,54 @@
+<h2 class="display-4 text-center">Match details</h2>
+<hr class="my-4">
+<div class="match">
+  <div *ngFor="let game of game" class="row text-center align-items-center mb-3 match-card">
+    <div class="col">
+      <div *ngFor="let team of teamList">
+        <app-team-detail *ngIf="team.id_t === game.id_t1" [team]="team"></app-team-detail>
+      </div>
+    </div>
+    <div class="col">
+      <p>{{ game.date | date:'medium'}}</p>
+      <p>{{ game.score_t1 }} VS {{ game.score_t2 }}</p>
+    </div>
+    <div class="col">
+      <div *ngFor="let team of teamList">
+        <app-team-detail *ngIf="team.id_t === game.id_t2" [team]="team"></app-team-detail>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="my-4">
+<h4 class="text-center mb-4">Place a bet</h4>
+<form>
+  <div class="form-group row">
+    <label for="betWinner" class="col-sm-2 col-form-label">Winner:</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="betWinner" required placeholder="Team name" #betWinner>
+        <option  *ngFor="let winnerteam of teamList" selected value="{{ winnerteam.id_t }}"> {{ winnerteam.name }} </option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="betValue" class="col-sm-2 col-form-label">Bet value:</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="betValue" required placeholder="Bet value" #betValue>
+    </div>
+  </div>
+  <div class="form-group d-flex justify-content-end">
+    <button type="submit" (click)="addBet(betWinner.value, betValue.value); betValue.value=''" class="btn btn-success mb-2">Place bet</button>
+  </div>
+</form>
+
+<hr class="my-4">
+<h4 class="text-center mb-4">My bets in this match</h4>
+<div class="bets">
+  <div *ngFor="let bet of betList" class="text-center align-items-center bet-card">
+    <div class="row ">
+      <div class="col-4"> <p><b>Ticket ID:</b> {{ bet.id_b }}</p> </div>
+      <div class="col-4"> <p><b>Your pick:</b> {{ bet.name }}</p> </div>
+      <div class="col-4"> <p><b>Value:</b> {{ bet.value }}</p>  </div>
+    </div>
+  </div>
+</div>

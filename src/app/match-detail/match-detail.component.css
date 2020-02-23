@@ -1,0 +1,16 @@
+.bet-card:nth-child(odd) {
+    background-color: #cac9c9;
+}
+  
+.bet-card:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+h4 {
+    font-weight: 300;
+}
+
+p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}

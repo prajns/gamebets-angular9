@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: linear-gradient(to right, #f1271138, #f5af1938), url(/assets/background-pattern--orange.png);
+    background-position: center;
+    background-attachment: fixed;
+}

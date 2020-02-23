@@ -1,0 +1,26 @@
+.match-card:nth-child(odd) {
+    background-color: #cac9c9;
+}
+  
+.match-card:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+.match-card {
+    color: #343a40;
+    cursor: pointer;
+}
+
+.match-card:link,
+.match-card:visited {
+    transition: filter 0.2s, color 0.2s;
+}
+
+.match-card:hover{
+    filter: brightness(85%);
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
