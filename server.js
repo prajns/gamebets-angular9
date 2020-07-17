@@ -26,7 +26,7 @@ connection.connect(error => {
 /************** SELECTS **************/
 
 // SELECT ALL TEAMS
-app.get('/select_teams', (req, res) => {       
+app.get('/teams', (req, res) => {       
     const sql = "SELECT * FROM teams";
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -36,7 +36,7 @@ app.get('/select_teams', (req, res) => {
 });
 
 // SELECT TEAM WITH ID_T
-app.get('/select_team/:id_t', (req, res) => {   
+app.get('/team/:id_t', (req, res) => {   
     const sql = `SELECT * FROM teams WHERE id_t = ${req.params.id_t}`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -46,7 +46,7 @@ app.get('/select_team/:id_t', (req, res) => {
 });
 
 // SELECT TWO TEAMS WITH ID_T = ID_T1 OR ID_T = ID_T2
-app.get('/select_two_teams/:id_t1/:id_t2', (req, res) => {   
+app.get('/two_teams/:id_t1/:id_t2', (req, res) => {   
     const sql = `SELECT * FROM teams WHERE id_t = ${req.params.id_t1} OR id_t = ${req.params.id_t2} `;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -56,7 +56,7 @@ app.get('/select_two_teams/:id_t1/:id_t2', (req, res) => {
 });
 
 // SELECT ALL GAMES
-app.get('/select_matches', (req, res) => {       
+app.get('/matches', (req, res) => {       
     const sql = "SELECT * FROM games JOIN teams AS t1 ON t1.id_t=games.id_t1 JOIN teams AS t2 ON t2.id_t=games.id_t2";
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -66,7 +66,7 @@ app.get('/select_matches', (req, res) => {
 });
 
 // SELECT MATCH WITH ID_G
-app.get('/select_match/:id_g', (req, res) => {   
+app.get('/match/:id_g', (req, res) => {   
     const sql = `SELECT * FROM games JOIN teams AS t1 ON t1.id_t=games.id_t1 JOIN teams AS t2 ON t2.id_t=games.id_t2 WHERE id_g = ${req.params.id_g}`;
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -76,7 +76,7 @@ app.get('/select_match/:id_g', (req, res) => {
 });
 
 // SELECT ALL BETS
-app.get('/select_bets', (req, res) => {       
+app.get('/bets', (req, res) => {       
     const sql = "SELECT * FROM bets JOIN games ON games.id_g=bets.id_g";
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -87,7 +87,7 @@ app.get('/select_bets', (req, res) => {
 
 // SELECT MY BETS
 //SELECT * FROM bets JOIN teams ON teams.id_t = bets.pick WHERE id_b IN (5,4,3,1,6)
-app.post('/select_my_bets/:id_g', (req, res) => {   
+app.post('/my_bets/:id_g', (req, res) => {
     let data = req.body;
     let ids = [];
 
@@ -95,7 +95,10 @@ app.post('/select_my_bets/:id_g', (req, res) => {
         ids.push(data[i].id_b);
         console.log(i);
     }
+
     data = ids.join(',');
+
+    console.log(data, req.body, req.params, ids);
 
     const sql = `SELECT * FROM bets JOIN teams ON teams.id_t = bets.pick WHERE id_b IN (${data}) AND id_g=${req.params.id_g}`;
     connection.query(sql, (error, results) => {
@@ -108,7 +111,7 @@ app.post('/select_my_bets/:id_g', (req, res) => {
 /************** UPDATES **************/
 
 // UPDATE TEAM
-app.post('/update_team/:id_t', (req, res) => {
+app.put('/team/:id_t', (req, res) => {
     let data = req.body;
     let sql = `UPDATE teams SET name=?, logo_url=? WHERE id_t=?`;
     connection.query(sql, [data.name, data.logo_url, data.id_t], (error, results) => {
@@ -120,7 +123,7 @@ app.post('/update_team/:id_t', (req, res) => {
 
 // UPDATE GAME
 // http://127.0.0.1:3000/update_game/?date="2021-02-19"&score_t1=1&score_t2=16&id_g=1
-app.get('/update_game/', (req, res) => {
+app.put('/game/', (req, res) => {
     let url_parts = url.parse(req.url, true);
     let attr = url_parts.query;
 
@@ -136,7 +139,7 @@ app.get('/update_game/', (req, res) => {
 /************** INSERTS **************/
 
 // ADD TEAM
-app.put('/add_team', (req, res) => {
+app.post('/team', (req, res) => {
     let data = req.body;
     let sql = `INSERT INTO teams (name, logo_url) values(?, ?)`;
     connection.query(sql, [data.name, data.logo_url], (error, results) => {
@@ -147,7 +150,7 @@ app.put('/add_team', (req, res) => {
 });
 
 // ADD BET
-app.put('/add_bet', (req, res) => {
+app.post('/bet', (req, res) => {
     let data = req.body;
     let sql = `INSERT INTO bets (id_g, pick, win, value) values(?, ?, ?, ?)`;
     connection.query(sql, [data.id_g, data.pick, data.win, data.value], (error, results) => {
@@ -160,7 +163,7 @@ app.put('/add_bet', (req, res) => {
 /************** DELETES **************/
  
 // DELETE TEAM WITH CERTAIN ID
-app.delete('/delete_team/:id_t', (req, res) => {
+app.delete('/team/:id_t', (req, res) => {
     let sql = `DELETE FROM teams WHERE id_t = ${req.params.id_t}`;
 
     connection.query(sql, (error, results) => {

@@ -1,8 +1,4 @@
-.match-card:nth-child(odd) {
-    background-color: #cac9c9;
-}
-  
-.match-card:nth-child(even) {
+ .match-card {
     background-color: #e0e0e0;
 }
 
@@ -17,7 +13,7 @@
 }
 
 .match-card:hover{
-    filter: brightness(85%);
+    background-color: #cac9c9;
 }
 
 .row {

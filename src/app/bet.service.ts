@@ -35,15 +35,15 @@ export class BetService {
   }
 
   getMyBetsBase(id_t: number, data: any): Observable<BetTicket[]> {
-    return this.http.post<any>(`http://127.0.01:3000/select_my_bets/${id_t}`, data);
+    return this.http.post<any>(`http://127.0.01:3000/my_bets/${id_t}`, data);
   }
 
   getBetsBase(): Observable<Bet[]> {
-    return this.http.get<any>('http://127.0.01:3000/select_bets');
+    return this.http.get<any>('http://127.0.01:3000/bets');
   }
 
   placeBetBase(bet: Bet): Observable<Bet> {
-    return this.http.put<any>('http://127.0.01:3000/add_bet', bet);
+    return this.http.post<any>('http://127.0.01:3000/bet', bet);
   }
 
 }

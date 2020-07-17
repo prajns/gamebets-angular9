@@ -28,7 +28,6 @@ export class MatchDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
-    private location: Location, 
     private MatchService: MatchService, 
     private TeamService: TeamService, 
     private BetService: BetService
@@ -38,7 +37,6 @@ export class MatchDetailComponent implements OnInit {
     this.getLocalStorage();
     this.getTwoTeamList();
     this.getMatchList();
-    this.getBetList();
   }
 
   getMatchList() {
@@ -64,7 +62,6 @@ export class MatchDetailComponent implements OnInit {
     //const id_b = +this.route.snapshot.paramMap.get('id_b');
     const id_g = +this.route.snapshot.paramMap.get('id_g');
     this.BetService.getMyBetsBase(id_g, this.myBetsIdList).subscribe((Response) => {
-      console.log(Response);
       this.betList = Response;
     }, (error) => {
       console.log(error);
@@ -74,6 +71,11 @@ export class MatchDetailComponent implements OnInit {
   getLocalStorage() {
     this.BetService.getBets().subscribe((Response) => {
       this.myBetsIdList = Response;
+      if(Response.length) {
+        this.getBetList();
+      }
+    },(error) => {
+      console.log("No saved bets in Localstorage!");
     }); 
   }
 

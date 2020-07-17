@@ -20,6 +20,8 @@ export class MatchesComponent implements OnInit {
   //games = GAMES;
 
   teamList: Team[];
+  teamA: Team;
+  teamB: Team;
   gameList: Game[];
 
   constructor(private MatchService: MatchService, private TeamService: TeamService) { }
@@ -40,6 +42,8 @@ export class MatchesComponent implements OnInit {
   getTeamList() {
     this.TeamService.getTeams().subscribe((Response) => {
       this.teamList = Response;
+      this.teamA = this.teamList[0];
+      this.teamB = this.teamList[1];
     }, (error) => {
       console.log(error);
     })    

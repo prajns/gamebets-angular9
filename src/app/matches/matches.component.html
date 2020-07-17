@@ -1,4 +1,4 @@
-<h2 class="display-4 text-center">Matches</h2>
+<h2 class="display-4 text-center">Upcoming Matches</h2>
 <hr class="my-4">
 <div class="games">
   <div *ngFor="let game of gameList" class="row text-center align-items-center mb-3 match-card" routerLink="/match_details/{{game.id_g}}/{{game.id_t1}}/{{game.id_t2}}">
@@ -9,12 +9,29 @@
     </div>
     <div class="col">
       <p>{{ game.date | date:'medium'}}</p>
-      <p>{{ game.score_t1 }} VS {{ game.score_t2 }}</p>
+      <p> (ADD EXCHANGE) </p>
     </div>
     <div class="col">
       <div *ngFor="let team of teamList">
         <app-team-detail *ngIf="team.id_t === game.id_t2" [team]="team"></app-team-detail>
       </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="display-4 mt-5 text-center">Matches History</h2>
+<hr class="my-4">
+<div class="games">
+  <div *ngFor="let game of gameList" class="row text-center align-items-center mb-3 match-card" routerLink="/match_details/{{game.id_g}}/{{game.id_t1}}/{{game.id_t2}}">
+    <div class="col">
+        <app-team-detail [team]="teamA"></app-team-detail>
+    </div>
+    <div class="col">
+      <p>{{ game.date | date:'medium'}}</p>
+      <h5>{{ game.score_t1 }} VS {{ game.score_t2 }}</h5>
+    </div>
+    <div class="col">
+        <app-team-detail [team]="teamB"></app-team-detail>
     </div>
   </div>
 </div>
