@@ -90,10 +90,13 @@ app.get('/select_bets', (req, res) => {
 app.post('/select_my_bets/:id_g', (req, res) => {   
     let data = req.body;
     let ids = [];
+
     for(i in data){
         ids.push(data[i].id_b);
+        console.log(i);
     }
     data = ids.join(',');
+
     const sql = `SELECT * FROM bets JOIN teams ON teams.id_t = bets.pick WHERE id_b IN (${data}) AND id_g=${req.params.id_g}`;
     connection.query(sql, (error, results) => {
         if (error) throw error;

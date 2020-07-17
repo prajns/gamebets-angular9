@@ -1,27 +1,36 @@
 <h2 class="display-4 text-center">Modify team</h2>
 <hr class="my-4">
 
-<form *ngFor="let team of team">
-  <div class="form-group row">
-    <label for="teamId" class="col-sm-2 col-form-label">Team ID: </label>
-    <div class="col-sm-10">
-    <input type="text" class="form-control-plaintext" readonly id="teamId" required value="{{team.id_t}}" #teamId>
+<div class="row" *ngFor="let team of team">
+    <div class="col-4">
+        <img *ngIf="team.logo_url" src="{{team.logo_url}}" class="img-fluid" onError="this.error=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png'">
+
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="teamName" class="col-sm-2 col-form-label">Team name: </label>
-    <div class="col-sm-10">
-    <input type="text" class="form-control" id="teamName" required value="{{team.name}}" #teamName>
+    <div class="col-8">
+        <form>
+            <div class="form-group row">
+              <label for="teamId" class="col-sm-3 col-form-label">Team ID: </label>
+              <div class="col-sm-9">
+              <input type="text" class="form-control-plaintext" readonly id="teamId" required value="{{team.id_t}}" #teamId>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="teamName" class="col-sm-3 col-form-label">Team name: </label>
+              <div class="col-sm-9">
+              <input type="text" class="form-control" id="teamName" required value="{{team.name}}" #teamName>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="teamLogoUrl" class="col-sm-3 col-form-label">Team logo url:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="teamLogoUrl" required value="{{team.logo_url}}" name="teamLogoUrl" [(ngModel)]="team.logo_url" #teamLogoUrl>
+              </div>
+            </div>
+            <div class="form-group d-flex justify-content-end">
+              <button (click)="goBack()" class="btn btn-dark mb-2">Go back</button>
+              <button (click)="editTeam(teamName.value, teamLogoUrl.value)" class="btn btn-primary mb-2">Edit</button>
+              <button (click)="deleteTeam()" class="btn btn-danger mb-2">Delete</button>
+            </div>
+          </form>
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="teamLogoUrl" class="col-sm-2 col-form-label">Team logo url:</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="teamLogoUrl" required value="{{team.logo_url}}" #teamLogoUrl>
-    </div>
-  </div>
-  <div class="form-group d-flex justify-content-end">
-    <button (click)="editTeam(teamName.value, teamLogoUrl.value)" class="btn btn-primary mb-2">Edit</button>
-    <button (click)="deleteTeam()" class="btn btn-danger mb-2">Delete</button>
-  </div>
-</form>
+</div>

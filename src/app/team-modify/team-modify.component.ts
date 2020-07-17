@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Team } from '../team';
@@ -14,7 +14,7 @@ export class TeamModifyComponent implements OnInit {
 
   @Input() team: Team;
 
-  constructor(private route: ActivatedRoute, private teamService: TeamService, private location: Location) { }
+  constructor(private route: ActivatedRoute, private teamService: TeamService, private router: Router) { }
 
   ngOnInit() {
     this.getTeam();
@@ -22,7 +22,7 @@ export class TeamModifyComponent implements OnInit {
 
   getTeam(): void {
     const id_t = +this.route.snapshot.paramMap.get('id_t');
-    this.teamService.getTeam(id_t).subscribe(team => this.team = team)
+    this.teamService.getTeam(id_t).subscribe(team => this.team = team);
   }
 
   deleteTeam(): void {
@@ -53,7 +53,7 @@ export class TeamModifyComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['teams']);
   }
 
 }

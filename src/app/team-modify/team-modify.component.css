@@ -1,3 +1,7 @@
 button {
     margin-left: 1em;
 }
+
+.col-form-label {
+    font-weight:bold;
+}
