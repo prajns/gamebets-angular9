@@ -14,3 +14,21 @@ p {
     margin-top: 4px;
     margin-bottom: 4px;
 }
+
+button {
+    margin-left: 1em;
+}
+
+.team-element{
+    box-sizing: border-box;
+    border: 3px solid transparent;
+}
+
+.team-element:hover:not(.pickedWinner){
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.pickedWinner {
+    border: 3px solid #28a746;
+}

@@ -16,13 +16,9 @@ import { Game } from '../game';
 })
 export class MatchesComponent implements OnInit {
 
-  //teams = TEAMS;
-  //games = GAMES;
-
   teamList: Team[];
-  teamA: Team;
-  teamB: Team;
-  gameList: Game[];
+  upcomingMatches: Game[] = [];
+  archivedMatches: Game[] = [];
 
   constructor(private MatchService: MatchService, private TeamService: TeamService) { }
 
@@ -32,8 +28,25 @@ export class MatchesComponent implements OnInit {
   }
 
   getMatchList() {
-    this.MatchService.getMatches().subscribe((Response) => {
-      this.gameList = Response;
+    this.MatchService.getMatches().subscribe((response) => {      
+      const today = new Date();
+      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const currentDate = new Date(date + ' ' + time);
+
+      response.forEach(element => {
+
+        const gameDate = new Date(element.date);
+
+        if(currentDate < gameDate) {
+            if(!element.score_t1 && !element.score_t2){
+                this.upcomingMatches.push(element);
+            }
+        } else {
+            this.archivedMatches.push(element);
+        }
+      });
+
     }, (error) => {
       console.log(error);
     })
@@ -42,8 +55,6 @@ export class MatchesComponent implements OnInit {
   getTeamList() {
     this.TeamService.getTeams().subscribe((Response) => {
       this.teamList = Response;
-      this.teamA = this.teamList[0];
-      this.teamB = this.teamList[1];
     }, (error) => {
       console.log(error);
     })    

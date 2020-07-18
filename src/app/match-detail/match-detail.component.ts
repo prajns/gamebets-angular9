@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Team } from '../team';
@@ -19,14 +19,19 @@ import { BetTicket } from '../betTicket';
 export class MatchDetailComponent implements OnInit {
 
   @Input() teamList: Team[];
-  @Input() betList: BetTicket [];
+  @Input() betList: BetTicket [] = [];
   @Input() game: Game;
   myBetsIdList: myBetsModel[];
+  teamA: Team;
+  teamB: Team;
   lastBetId: number;
+
+  selectedWinner = 0;
   
   myBetsIdArray: Array<number>;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute, 
     private MatchService: MatchService, 
     private TeamService: TeamService, 
@@ -34,8 +39,8 @@ export class MatchDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getLocalStorage();
     this.getTwoTeamList();
+    this.getLocalStorage();
     this.getMatchList();
   }
 
@@ -53,6 +58,8 @@ export class MatchDetailComponent implements OnInit {
     const id_t2 = +this.route.snapshot.paramMap.get('id_t2');
     this.TeamService.getTwoTeams(id_t1, id_t2).subscribe((Response) => {
       this.teamList = Response;
+      this.teamA = this.teamList[0];
+      this.teamB = this.teamList[1];
     }, (error) => {
       console.log(error);
     })    
@@ -85,6 +92,10 @@ export class MatchDetailComponent implements OnInit {
     });
   }
 
+  onWinnerPick(val) {
+    this.selectedWinner = val;
+  }
+
   addBet(pick, value): void {
     const id_g = +this.route.snapshot.paramMap.get('id_g');
     const data = {
@@ -104,6 +115,10 @@ export class MatchDetailComponent implements OnInit {
       console.log(error);
     });
     
+  }
+
+  goBack(): void {
+    this.router.navigate(['matches']);
   }
 
 }
