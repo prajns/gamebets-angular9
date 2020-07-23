@@ -10,6 +10,7 @@ import { myBetsModel } from '../myBetsModel';
 import { Bet } from '../bet';
 import { BetService } from '../bet.service';
 import { BetTicket } from '../betTicket';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-match-detail',
@@ -21,12 +22,13 @@ export class MatchDetailComponent implements OnInit {
   @Input() teamList: Team[];
   @Input() betList: BetTicket [] = [];
   @Input() game: Game;
+  @Input() matchstatus: string;
   myBetsIdList: myBetsModel[];
   teamA: Team;
   teamB: Team;
   lastBetId: number;
 
-  selectedWinner = 0;
+  selectedWinner;
   
   myBetsIdArray: Array<number>;
 
@@ -96,14 +98,16 @@ export class MatchDetailComponent implements OnInit {
     this.selectedWinner = val;
   }
 
-  addBet(pick, value): void {
+  addBet(form: NgForm): void {
+      console.log(form.value)
+      
     const id_g = +this.route.snapshot.paramMap.get('id_g');
     const data = {
       "id_b": 0,
       "id_g": id_g,
-      "pick": pick,
+      "pick": form.value.selectedWinner,
       "win": 0,
-      "value": value
+      "value": form.value.betValue
     }
     
     this.BetService.placeBetBase(data).subscribe((Response) => {

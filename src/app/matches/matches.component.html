@@ -32,7 +32,11 @@
       <p>{{ archivedMatch.date | date:'medium'}}</p>
       <h5 *ngIf="archivedMatch.score_t1 == null || archivedMatch.score_t2 == null; else showScore" class="text-danger">FORFEIT</h5>
       <ng-template #showScore>
-        <h5>{{ archivedMatch.score_t1 }} VS {{ archivedMatch.score_t2 }}</h5>
+        <h5>
+            <span [ngClass]="(archivedMatch.score_t1 > archivedMatch.score_t2) ? 'text-success' : 'text-danger'">{{ archivedMatch.score_t1 }}</span> 
+            - 
+            <span [ngClass]="(archivedMatch.score_t2 > archivedMatch.score_t1) ? 'text-success' : 'text-danger'">{{ archivedMatch.score_t2 }}</span>
+        </h5>
       </ng-template>
     </div>
     <div class="col">

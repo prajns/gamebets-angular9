@@ -1,13 +1,9 @@
-.bet-card:nth-child(odd) {
-    background-color: #cac9c9;
-}
-  
-.bet-card:nth-child(even) {
-    background-color: #e0e0e0;
-}
-
 h4 {
     font-weight: 300;
+}
+
+.text-success, .text-danger {
+    font-weight: 500;
 }
 
 p {
@@ -31,4 +27,8 @@ button {
 
 .pickedWinner {
     border: 3px solid #28a746;
+}
+
+.table td, .table tr {
+    text-align: center;   
 }

@@ -5,7 +5,7 @@
         <div *ngFor="let team of teamList" class="text-center col-md-3 col-sm-6 mb-3">
             <a routerLink="/team_details/{{team.id_t}}">
                 <div class="team-card" *ngIf="team.id_t">
-                    <img [src]="team.logo_url" [alt]="team.name" class="team-logo img-fluid mt-3 rounded-0" >
+                    <img [src]="team.logo_url" [alt]="team.name" class="team-logo img-fluid mt-3 rounded-0" onError="this.error=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png'">
                     <div class="card-body">
                     <p class="card-text h5"> {{ team.name }} </p>
                     </div>
@@ -17,20 +17,22 @@
 
 <hr class="my-4">
 
-<form>
-  <div class="form-group row">
+<form #addTeamForm="ngForm" (ngSubmit)="addTeam(addTeamForm)">
+  <div class="form-group row" ngModelGroup="teamName" #teamName="ngModelGroup">
     <label for="teamName" class="col-sm-2 col-form-label">Team name: </label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="teamName" required placeholder="Team name" #newteamName>
+      <input type="text" class="form-control" id="teamName" placeholder="Team name" ngModel #newTeamName="ngModel" name="newTeamName" required>
+      <span class="help-block text-danger" *ngIf="!newTeamName.valid && newTeamName.touched">Team name is required!</span>
     </div>
   </div>
-  <div class="form-group row">
+  <div class="form-group row" ngModelGroup="teamLogo" #teamLogo="ngModelGroup">
     <label for="teamLogoUrl" class="col-sm-2 col-form-label">Team logo url:</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="teamLogoUrl" required placeholder="Image URL" #newteamLogoUrl>
+      <input type="text" class="form-control" id="teamLogoUrl" required placeholder="Image URL" ngModel  #newTeamLogoUrl="ngModel" name="newTeamLogo">
+      <span class="help-block text-danger" *ngIf="!newTeamLogoUrl.valid && newTeamLogoUrl.touched">Team logo is required!</span>
     </div>
   </div>
   <div class="form-group d-flex justify-content-end">
-    <button type="submit" (click)="addTeam(newteamName.value, newteamLogoUrl.value); newteamName.value=''; newteamLogoUrl.value=''" class="btn btn-success mb-2">Add team</button>
+    <button type="submit" class="btn btn-success mb-2" [disabled]="!addTeamForm.valid">Add team</button>
   </div>
 </form>

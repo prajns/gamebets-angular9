@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { TeamService } from '../team.service';
 import { Team } from '../team';
+import { NgForm } from '@angular/forms';
 //import { TEAMS } from '../mock-teams';
 
 @Component({
@@ -31,11 +32,11 @@ export class TeamsComponent implements OnInit {
     })
   }
 
-  addTeam(name, logo_url): void {
+  addTeam(form: NgForm): void {
     const data = {
       "id_t": 0,
-      "name": name,
-      "logo_url": logo_url
+      "name": form.value.teamName.newTeamName,
+      "logo_url": form.value.teamLogo.newTeamLogo
     }
     
     this.TeamService.addTeam(data).subscribe((Response) => {
@@ -43,6 +44,8 @@ export class TeamsComponent implements OnInit {
     }, (error) => {
       console.log(error);
     });
+
+    form.reset();
   }
 
 }

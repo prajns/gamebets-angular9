@@ -9,7 +9,11 @@
     </div>
     <div class="col">
       <p>{{ game.date | date:'medium'}}</p>
-      <p>{{ game.score_t1 }} VS {{ game.score_t2 }}</p>
+      <h4>
+        <span [ngClass]="(game.score_t1 > game.score_t2) ? 'text-success' : 'text-danger'">{{ game.score_t1 }}</span> 
+        - 
+        <span [ngClass]="(game.score_t2 > game.score_t1) ? 'text-success' : 'text-danger'">{{ game.score_t2 }}</span>
+      </h4>
     </div>
     <div class="col">
       <div class="team-element" (click)="selectedWinner = teamB.id_t" [ngClass]="{'pickedWinner': selectedWinner == teamB.id_t}" #teamDivB>
@@ -19,41 +23,58 @@
   </div>
 </div>
 
-<div *ngIf="betList.length != 0">
-    <hr class="my-4">
+<hr class="my-4">
 
+<div *ngIf="betList.length != 0; else noBetsInfo">
     <h4 class="text-center mb-4">My bets in this match</h4>
     <div class="bets">
-        <div *ngFor="let bet of betList" class="text-center align-items-center bet-card">
-            <div class="row ">
-                <div class="col-4"> <p><b>Ticket ID:</b> {{ bet.id_b }}</p> </div>
-                <div class="col-4"> <p><b>Your pick:</b> {{ bet.name }}</p> </div>
-                <div class="col-4"> <p><b>Value:</b> {{ bet.value }}</p>  </div>
-            </div>
-        </div>
+        <table class="table table-sm table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Ticket ID</th>
+                <th scope="col">Your pick</th>
+                <th scope="col">Placed money</th>
+                <th scope="col">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bet of betList">
+                <td> {{ bet.id_b }} </td>
+                <td> {{ bet.name }} </td>
+                <td> {{ bet.value }} </td>
+                <td> {{ bet.value * 3}} </td>
+              </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
+<ng-template #noBetsInfo>
+    <h5 class="text-center text-danger mb-4">No active bets in this match</h5>
+</ng-template>
+
 <hr class="my-4">
 
-<h4 class="text-center mb-4">Place a bet</h4>
-<form #formBet="ngForm">
+<h4 class="text-center mb-4 mt-4">Place a bet</h4>
+<form #formBet="ngForm" (ngSubmit)="addBet(formBet)">
   <div class="form-group row">
     <label for="betWinner" class="col-sm-2 col-form-label">Winner:</label>
     <div class="col-sm-10">
-      <select class="form-control" id="betWinner" required placeholder="Team name" #betWinner [ngModel]="selectedWinner" name="winner" (change)="onWinnerPick($event.target.value)">
+      <select class="form-control" id="betWinner" placeholder="Team name" ngModel #betWinner="ngModel" [(ngModel)]="selectedWinner" name="selectedWinner" (change)="onWinnerPick($event.target.value)" required>
         <option  *ngFor="let team of teamList" [value]="team.id_t"> {{ team.name }} </option>
       </select>
+      <span class="help-block text-danger" *ngIf="!betWinner.valid && betWinner.touched">You have to choose a team!</span>
     </div>
   </div>
   <div class="form-group row">
     <label for="betValue" class="col-sm-2 col-form-label">Bet value:</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="betValue" required placeholder="Bet value" #betValue>
+      <input type="number" class="form-control" id="betValue" placeholder="Bet value" ngModel #betValue="ngModel" name="betValue" required>
+      <span class="help-block text-danger" *ngIf="!betValue.valid && betValue.touched">You have to insert amount!</span>
     </div>
   </div>
   <div class="form-group d-flex justify-content-end">
     <button (click)="goBack()" class="btn btn-dark mb-2">Go back</button>
-    <button type="submit" (click)="addBet(betWinner.value, betValue.value); betValue.value=''" class="btn btn-success mb-2">Place bet</button>
+    <button type="submit" class="btn btn-success mb-2" [disabled]="!formBet.valid">Place bet</button>
   </div>
 </form>

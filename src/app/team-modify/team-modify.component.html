@@ -7,17 +7,18 @@
 
     </div>
     <div class="col-8">
-        <form>
-            <div class="form-group row">
+        <form #modifyTeamForm="ngForm">
+            <div class="form-group row" >
               <label for="teamId" class="col-sm-3 col-form-label">Team ID: </label>
               <div class="col-sm-9">
-              <input type="text" class="form-control-plaintext" readonly id="teamId" required value="{{team.id_t}}" #teamId>
+                <input type="text" class="form-control-plaintext" readonly id="teamId" required value="{{team.id_t}}" #teamId>
               </div>
             </div>
             <div class="form-group row">
               <label for="teamName" class="col-sm-3 col-form-label">Team name: </label>
               <div class="col-sm-9">
-              <input type="text" class="form-control" id="teamName" required value="{{team.name}}" #teamName>
+                <input type="text" class="form-control" id="teamName" ngModel required [(ngModel)]="team.name" #teamName="ngModel" name="teamName">
+                <span class="help-block text-danger" *ngIf="!teamName.valid && teamName.touched">Team name is required!</span>
               </div>
             </div>
             <div class="form-group row">
@@ -28,7 +29,7 @@
             </div>
             <div class="form-group d-flex justify-content-end">
               <button (click)="goBack()" class="btn btn-dark mb-2">Go back</button>
-              <button (click)="editTeam(teamName.value, teamLogoUrl.value)" class="btn btn-primary mb-2">Edit</button>
+              <button (click)="editTeam(teamName.value, teamLogoUrl.value)" type="submit" class="btn btn-primary mb-2" [disabled]="!modifyTeamForm.valid">Edit</button>
               <button (click)="deleteTeam()" class="btn btn-danger mb-2">Delete</button>
             </div>
           </form>

@@ -23,3 +23,7 @@ a{
 .col-form-label {
     font-weight:bold;
 }
+
+form .form-group .ng-invalid.ng-touched {
+    border: 1px solid #dc3545;
+}

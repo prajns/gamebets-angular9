@@ -22,7 +22,7 @@ In application user can choose winner of certain match. He can add, remove and m
 
 ### Prerequisites
 
-* [Angular 7](https://angular.io/)
+* [Angular 9](https://angular.io/)
 * [node.js](https://nodejs.org/en/)
 * [mySQL](https://www.mysql.com/)
 
@@ -58,13 +58,13 @@ Navigate to `http://localhost:4200/`
 
 ## Built With
 
-* [Angular 7](https://angular.io/) - Frontend
-* [node.js](https://nodejs.org/en/) - REST API
+* [Angular 9](https://angular.io/)
+* [node.js](https://nodejs.org/en/)
 * JavaScript (ES5+)
 * HTML
 * CSS
-* [Font Awesome](https://fontawesome.com/) - Icons
-* [Bootstrap 4](https://getbootstrap.com/) - Stylize and responsive CSS
+* [Font Awesome](https://fontawesome.com/)
+* [Bootstrap 4](https://getbootstrap.com/)
 
 ## Author
 
